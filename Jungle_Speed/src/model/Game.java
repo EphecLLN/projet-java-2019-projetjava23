@@ -33,7 +33,7 @@ public class Game {
 	 * @param startedAt <i>LocalDateTime au moment du lancement</i>
 	 */
 	public Game(int idGame, LocalDateTime startedAt) {
-		super();
+
 		this.idGame = idGame;
 		this.startedAt = startedAt;
 

@@ -20,7 +20,8 @@ public class Main {
 	public static View vue;
 	public static Gui frame;
 	public static Timer timer;
-	
+
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 
 		Game g = new Game(0, LocalDateTime.now());
@@ -30,92 +31,47 @@ public class Main {
 		Player p2 = new Player(1, "nadia");
 		Player p3 = new Player(2, "adele");
 		Player p4 = new Player(3, "joacyn");
-		Player p5 = new Player(4, "flo");
-		
+		Player p5 = new Player(4, "cedric");
+
 		Main.buildDeck(g);
 		g.getPlayers().add(p1);
 		g.getPlayers().add(p2);
 		g.getPlayers().add(p3);
 		g.getPlayers().add(p4);
 		g.getPlayers().add(p5);
-		
+
 		Main.distrbute(g);
 		g.builLink();
-		
+
 		controller = new Controller(p1);
 		vue = new ConsoleView(p1, controller);
 		controller.addView(vue);
 		frame = new Gui(p1, controller);
 		frame.setVisible(true);
-		
+
 		timer = new Timer();
-		//timer.start();
-		
-		// connexion  du client
-		
+		// timer.start();
+
+		// connexion du client
+
 		Thread listenClient = null;
 		try {
 			Socket socket = new Socket(InetAddress.getLocalHost(), 2023);
 			listenClient = new Thread(new ListenClient(socket));
 			listenClient.start();
-			
-		}catch(UnknownHostException e) {
-			
-		}catch(IOException e) {
-			
+
+		} catch (UnknownHostException e) {
+
+		} catch (IOException e) {
+
 		}
-		
-		
-		/*
-		 * Main.print(p1.toString()); Main.print(p2.toString());
-		 * Main.print(p3.toString()); Main.print(g.getDeck().get(0).toString() + " ");
-		 */
 
-		/*p1.playCard(g);
-		p2.playCard(g);
-		p2.pickTotem(g);
-		p3.playCard(g);
-		p3.pickTotem(g);
-		p4.playCard(g);
-		p4.pickTotem(g);
-
-		p1.playCard(g);
-		p1.pickTotem(g);
-		p2.playCard(g);
-		p2.pickTotem(g);
-		p3.playCard(g);
-		p3.pickTotem(g);
-		p4.playCard(g);
-		p4.pickTotem(g);
-
-		p1.playCard(g);
-		p1.pickTotem(g);
-		p2.playCard(g);
-		p2.pickTotem(g);
-		p3.playCard(g);
-		p3.pickTotem(g);
-		p4.playCard(g);
-		p4.pickTotem(g);
-
-		p1.playCard(g);
-		p1.pickTotem(g);
-		p2.playCard(g);
-		p2.pickTotem(g);
-		p3.playCard(g);
-		p3.pickTotem(g);
-		p4.playCard(g);
-		p4.pickTotem(g);
-
-		//Main.print(p1.toString());
-		//Main.print(p2.toString());
-		//Main.print(p3.toString());
-		//Main.print(p4.toString());*/
 	}
 
-	
 	public static String now() {
-		return "["+LocalTime.now()+"] ";
+		return "[" + LocalTime.now() + "] ";
 	}
+
 	/**
 	 * <u><b>Méthode utilitaire</u></b>
 	 * <hr>
@@ -180,17 +136,17 @@ public class Main {
 
 			}
 		}
-
+		// creer les 8 cartes spéciaux
 		for (int i = 0; i < 2; i++) {
 			Card c = new SpecialCard(g.getDeck().size(), "MULTI_COLOR", "Multi couleur", Image.image1);
 			g.getDeck().add(c);
 		}
 		for (int i = 0; i < 3; i++) {
-			Card c = new SpecialCard(g.getDeck().size(), "INTERIOR", "Fl�ches int�rieures", Image.image1);
+			Card c = new SpecialCard(g.getDeck().size(), "INTERIOR", "Flèches intérieures", Image.image1);
 			g.getDeck().add(c);
 		}
 		for (int i = 0; i < 3; i++) {
-			Card c = new SpecialCard(g.getDeck().size(), "EXTERIOR", "Fl�ches ext�rieures", Image.image1);
+			Card c = new SpecialCard(g.getDeck().size(), "EXTERIOR", "Flèches extérieures", Image.image1);
 			g.getDeck().add(c);
 		}
 

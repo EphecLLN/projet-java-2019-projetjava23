@@ -28,9 +28,9 @@ public class Server {
 			t.start();
 			scanner = new ListenServer(socket);
 			Server.setScanner(scanner);
-			Main.print("Serveur lanc�");
+			Main.print("Serveur lancé");
 			Main.print("Attente de la connexion des joueurs");
-			
+
 			scan = new Thread(scanner);
 			Server.setScan(scan);
 		} catch (IOException e) {
@@ -76,7 +76,7 @@ class Connexion implements Runnable {
 	private PrintWriter out = null;
 
 	public Connexion(ServerSocket server) {
-		super();
+
 		this.server = server;
 	}
 
@@ -87,24 +87,24 @@ class Connexion implements Runnable {
 				client = server.accept();
 				in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 				out = new PrintWriter(client.getOutputStream());
-				
+
 				if (playerNum == 1) {
 					Server.getScan().start();
-					
+
 				}
-				
+
 				this.initialization(playerNum);
 				Server.getScanner().getSocketClientList().add(client);
-				Main.print("Client connect� ("+playerNum+")");
-				
+				Main.print("Client connecté (" + playerNum + ")");
+
 				if (playerNum == 5) {
 					Server.getScanner().initIn();
 					Server.getScanner().initOut();
-					Main.print(Server.getScanner().getSocketClientList().size()+"");
-					Main.print(Server.getScanner().getIn().size()+"");
-					Main.print(Server.getScanner().getOut().size()+"");
-					//Server.getScanner().start("0", "start");
-					
+					Main.print(Server.getScanner().getSocketClientList().size() + "");
+					Main.print(Server.getScanner().getIn().size() + "");
+					Main.print(Server.getScanner().getOut().size() + "");
+					// Server.getScanner().start("0", "start");
+
 				}
 				playerNum++;
 
@@ -113,12 +113,12 @@ class Connexion implements Runnable {
 
 		}
 	}
-	
+
 	public void initialization(int number) {
-		//Server.getScanner().send(""+number, "Vous �tes assign� au joueur "+number);
+
 		int nb = number - 1;
-		out.println(""+nb);
-		out.println("Vous �tes assign� au joueur "+number);
+		out.println("" + nb);
+		out.println("Vous êtes assigné au joueur " + number);
 		out.flush();
 	}
 

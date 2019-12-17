@@ -14,7 +14,7 @@ public class View extends JFrame implements Observer {
 	protected Controller controller;
 
 	public View(Player model, Controller controller) {
-		
+
 		this.model = model;
 		this.controller = controller;
 		model.addObserver(this);
@@ -53,6 +53,5 @@ public class View extends JFrame implements Observer {
 		// TODO Auto-generated method stub
 		
 	}
-	
 
 }

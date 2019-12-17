@@ -30,7 +30,7 @@ public class ConsoleView extends View {
 						break;
 						case "s": controller.stop();
 						break;
-						case "pl": controller.playCard();
+						case "pc": controller.playCard();
 						break;
 					}
 				}

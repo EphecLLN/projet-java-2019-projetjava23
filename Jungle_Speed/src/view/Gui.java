@@ -55,7 +55,7 @@ public class Gui extends View {
 		this.setContentPane(panel);
 		
 		JButton button = new JButton();
-		button.setName("");
+		//button.setName("");
 		button.setBounds(290, 290, 100, 100);
 		button.setName("totem");
 		panel.add(button);
