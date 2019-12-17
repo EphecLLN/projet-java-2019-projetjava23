@@ -4,7 +4,7 @@ public abstract class Card {
 	private int idCard;
 
 	public Card(int idCard) {
-		super();
+
 		this.idCard = idCard;
 	}
 
@@ -16,5 +16,4 @@ public abstract class Card {
 		this.idCard = idCard;
 	}
 
-	
 }

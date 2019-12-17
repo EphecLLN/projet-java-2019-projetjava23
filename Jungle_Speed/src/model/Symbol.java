@@ -10,7 +10,7 @@ public class Symbol {
 	private static ArrayList<Symbol> symbolList = new ArrayList<Symbol>();
 
 	public Symbol(int idSymbol, String label, Image image) {
-		super();
+
 		this.idSymbol = idSymbol;
 		this.label = label;
 		this.image = image;

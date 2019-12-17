@@ -7,21 +7,21 @@ import java.util.Observable;
 import sockets.ListenClient;
 
 @SuppressWarnings("deprecation")
-public class Player  extends Observable{
+public class Player extends Observable {
 
 	private int idPlayer;
 	private String name;
-	
+
 	private ArrayList<Card> cardslnHand = new ArrayList<Card>();
 	private ArrayList<Card> cardslnFront = new ArrayList<Card>();
-	
+
 	private boolean pickTotem = false;
-	
+
 	private ListenClient scanner;
 	private Socket socket;
 
 	public Player(int idPlayer, String name, ArrayList<Card> cardslnHand, ArrayList<Card> cardslnFront) {
-		
+
 		this.idPlayer = idPlayer;
 		this.name = name;
 		this.cardslnHand = cardslnHand;
@@ -29,7 +29,7 @@ public class Player  extends Observable{
 	}
 
 	public Player(int idPlayer, String name, Card[] cardslnHand, Card[] cardslnFront) {
-		
+
 		this.idPlayer = idPlayer;
 		this.name = name;
 
@@ -42,7 +42,7 @@ public class Player  extends Observable{
 	}
 
 	public Player(int idPlayer, String name) {
-	
+
 		this.idPlayer = idPlayer;
 		this.name = name;
 
@@ -93,7 +93,6 @@ public class Player  extends Observable{
 	public void setPickTotem(boolean pickTotem) {
 		this.pickTotem = pickTotem;
 	}
-	
 
 	/**
 	 * @return the scanner
@@ -157,24 +156,24 @@ public class Player  extends Observable{
 	 * @param g <i> Partie en cours
 	 */
 	public void playCard(Game g) {
-		this.getScanner().send(""+this.getIdPlayer(), "playCard"); // envoyer l'info au serveur 
+		this.getScanner().send("" + this.getIdPlayer(), "playCard"); // envoyer l'info au serveur
 		Card c = this.getCardslnHand().get(0);
 		this.getCardslnHand().remove(0);
 		this.getCardslnFront().add(c);
-		Main.print("\n"+Main.now()+"" + this.getName() + " a joué la carte " + c.toString());
-		
+		Main.print("\n" + Main.now() + "" + this.getName() + " a joué la carte " + c.toString());
+
 		if (c.getClass().equals(SpecialCard.class)) {
 			if (((SpecialCard) c).getType().equalsIgnoreCase("MULTI_COLOR")) {
 				g.setModeColor(true);
 				Main.print("le jeu est en mode couleur");
 			}
 			if (((SpecialCard) c).getType().equalsIgnoreCase("INTERIOR")) {
-				for(int i=0 ; i<g.getPlayers().size(); i++) {
+				for (int i = 0; i < g.getPlayers().size(); i++) {
 					g.getPlayers().get(i).setPickTotem(true);
 					g.setModeArrowInt(true);
-					
+
 				}
-				
+
 				Main.print("Activation du duel entre tous les joueurs");
 
 			}
@@ -188,15 +187,15 @@ public class Player  extends Observable{
 	 * @return
 	 */
 	public boolean pickTotem(Game game) {
-		this.getScanner().send(""+this.getIdPlayer(), "pickTotem");
+		this.getScanner().send("" + this.getIdPlayer(), "pickTotem");
 		if (game.isModeArrowInt() == true) {
-			
+
 			game.getTrash().addAll(this.getCardslnFront());
 			this.getCardslnFront().clear();
-			
+
 			Main.print("\n" + this.name + " a gagné le duel");
 			Main.print("" + this.name + " place sa défausse au centre de la table");
-			
+
 			if (game.isModeArrowInt() == true) {
 				game.setModeArrowInt(false);
 				Main.print("le jeu n'est plus en mode intérieur");
@@ -205,40 +204,38 @@ public class Player  extends Observable{
 				game.setModeColor(false);
 				Main.print("le jeu n'est plus en mode couleur");
 			}
-		}
-		else {
+		} else {
 			try {
-	
+
 				if (game.getLinkActive().getPlayer1().equals(this) || game.getLinkActive().getPlayer2().equals(this)) {
-	
+
 					Player loser;
 					if (game.getLinkActive().getPlayer1().equals(this)) {
 						loser = game.getLinkActive().getPlayer2();
-					}
-					else {
+					} else {
 						loser = game.getLinkActive().getPlayer1();
 					}
-					
-				//	Main.print(game.getLinkActive().getPlayer1().name+" "+game.getLinkActive().getPlayer1().isPickTotem());
-				//	Main.print(game.getLinkActive().getPlayer2().name+" "+game.getLinkActive().getPlayer2().isPickTotem());
-					
+
+					// Main.print(game.getLinkActive().getPlayer1().name+"
+					// "+game.getLinkActive().getPlayer1().isPickTotem());
+					// Main.print(game.getLinkActive().getPlayer2().name+"
+					// "+game.getLinkActive().getPlayer2().isPickTotem());
+
 					if (this.pickTotem == true) {
-						Main.print("\n "+Main.now()+"" + this.name + " a pris le totem");
-	
+						Main.print("\n " + Main.now() + "" + this.name + " a pris le totem");
+
 						game.resolveDuel(this, loser);
 						return true;
+					} else {
+						// Main.print("\n"+this.name+" n'a pas le droit de prendre le totem");
 					}
-					else {
-						//Main.print("\n"+this.name+" n'a pas le droit de prendre le totem");
-					}
-	
+
 				}
 			} catch (NullPointerException e) {
-			//	Main.print("Exception lors de la prise de totem du joueur "+this.name);
+				// Main.print("Exception lors de la prise de totem du joueur "+this.name);
 			}
 		}
-		
-		
+
 		return false;
 
 	}

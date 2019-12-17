@@ -3,26 +3,26 @@ package model;
 import java.util.ArrayList;
 
 public class Color {
-	private int idImage;
+	private int idColor;
 	private String label;
 	private String hexacode;
 	private static ArrayList<Color> colorList = new ArrayList<Color>();
 
-	public Color(int idImage, String label, String hexacode) {
-		
-		this.idImage = idImage;
+	public Color(int idColor, String label, String hexacode) {
+
+		this.idColor = idColor;
 		this.label = label;
 		this.hexacode = hexacode;
 
 		Color.colorList.add(this);
 	}
 
-	public int getIdImage() {
-		return idImage;
+	public int getidColor() {
+		return idColor;
 	}
 
-	public void setIdImage(int idImage) {
-		this.idImage = idImage;
+	public void setidColor(int idColor) {
+		this.idColor = idColor;
 	}
 
 	public String getLabel() {
